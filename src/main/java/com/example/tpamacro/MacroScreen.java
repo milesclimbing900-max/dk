@@ -101,7 +101,11 @@ public class MacroScreen extends Screen {
 
     @Override
     public void render(DrawContext c, int mx, int my, float delta) {
-        renderBackground(c, mx, my, delta);
+        try {
+    renderBackground(c, mx, my, delta);
+} catch (IllegalStateException ignored) {
+    // blur was already applied this frame, so the background is already blurred
+}
 
         long nowNs = System.nanoTime();
         float dt = lastNs == 0 ? 0.016f : Math.min(0.05f, (nowNs - lastNs) / 1_000_000_000f);
